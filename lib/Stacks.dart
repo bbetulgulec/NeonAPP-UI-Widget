@@ -13,23 +13,29 @@ class _StacksState extends State<Stacks> {
     {
       "name": "Expelliarmus",
       "path": "assets/images/Expelliarmus.png",
-      "alignment": const Alignment(-0.9, -0.9),
+      "alignment": const Alignment(-0.8, -0.1),
     },
     {
       "name": "Accio",
       "path": "assets/images/Accio.png",
-      "alignment": const Alignment(0.9, -0.9),
+      "alignment": const Alignment(0.1, -0.8),
     },
     {
       "name": "Lumos",
       "path": "assets/images/Lumos.png",
-      "alignment": const Alignment(-0.9, 0.9),
+      "alignment": const Alignment(-0.8, 0.8),
     },
     {
       "name": "Stupefy",
       "path": "assets/images/Stupefy.png",
-      "alignment": const Alignment(0.9, 0.9),
+      "alignment": const Alignment(0.8, 0.8),
     },
+  ];
+  final offsets = [
+    const Offset(0, -40), // ÜSTTE – net yukarı oynar
+    const Offset(40, 0), // SAĞDA – net sağa oynar
+    const Offset(0, 40), // ALTA – net aşağı oynar
+    const Offset(-40, 0), // SOLDa – net sola oynar
   ];
 
   @override
@@ -55,32 +61,28 @@ class _StacksState extends State<Stacks> {
               ),
             ),
           ),
-          for (var spell in spells)
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 60.0,
-                left: 60.0,
-                top: 10.0,
-              ),
-              child: Align(
-                alignment: spell["alignment"],
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(spell["path"], height: 100),
-                    const SizedBox(height: 8),
-                    Text(
-                      spell["name"],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontFamily: "PairPlay",
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+
+          Center(
+            child: Stack(
+              children: List.generate(spells.length, (index) {
+                final spell = spells[index];
+
+                final double dy = index * 35;
+
+                return Transform.translate(
+                  offset: offsets[index],
+
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(spell["path"], height: 100),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                );
+              }),
             ),
+          ),
         ],
       ),
     );
