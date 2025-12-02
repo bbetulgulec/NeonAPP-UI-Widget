@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SliderUI extends StatefulWidget {
   const SliderUI({super.key, required this.title});
@@ -11,6 +12,7 @@ class SliderUI extends StatefulWidget {
 
 class _SliderUIState extends State<SliderUI> {
   double currentSliderValue = 20;
+  final int _duration = 300;
 
   @override
   Widget build(BuildContext context) {
@@ -21,37 +23,34 @@ class _SliderUIState extends State<SliderUI> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Resimler
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Opacity(
-                  opacity: _getOpacity(currentSliderValue, 0),
-                  child: Image.asset(
-                    "assets/images/greenDragon.jpg",
-                    width: 80,
-                    height: 80,
+            // SVG'lerin Dinamik Olarak Boyanması/Görünürlüğü
+            SizedBox(
+              width: 300,
+              height: 300,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  _buildAnimatedSvg(
+                    color: Colors.green,
+                    assetPath: "assets/svg/a.svg",
+                    isVisible: currentSliderValue <= 20,
                   ),
-                ),
-                Opacity(
-                  opacity: _getOpacity(currentSliderValue, 1),
-                  child: Image.asset(
-                    "assets/images/yellowDragon.jpg",
-                    width: 80,
-                    height: 80,
+                  _buildAnimatedSvg(
+                    color: Colors.yellow,
+                    assetPath: "assets/svg/a.svg",
+                    isVisible:
+                        currentSliderValue > 20 && currentSliderValue <= 40,
                   ),
-                ),
-                Opacity(
-                  opacity: _getOpacity(currentSliderValue, 2),
-                  child: Image.asset(
-                    "assets/images/redDragon.jpg",
-                    width: 80,
-                    height: 80,
+                  _buildAnimatedSvg(
+                    color: Colors.red,
+                    assetPath: "assets/svg/a.svg",
+                    isVisible: currentSliderValue > 40,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const SizedBox(height: 40),
+
+            const SizedBox(height: 32),
 
             // Slider
             Stack(
@@ -63,7 +62,7 @@ class _SliderUIState extends State<SliderUI> {
                     borderRadius: BorderRadius.circular(4),
                     gradient: const LinearGradient(
                       colors: [Colors.green, Colors.yellow, Colors.red],
-                      stops: [0.0, 0.5, 1.0],
+                      stops: [0.0, 0.4, 1.0],
                     ),
                   ),
                 ),
@@ -107,9 +106,20 @@ class _SliderUIState extends State<SliderUI> {
     );
   }
 
-  double _getOpacity(double sliderValue, int index) {
-    if (index == 0) return sliderValue <= 20 ? 1.0 : 0.3;
-    if (index == 1) return sliderValue > 20 && sliderValue <= 40 ? 1.0 : 0.3;
-    return sliderValue > 40 ? 1.0 : 0.3;
+  Widget _buildAnimatedSvg({
+    required Color color,
+    required String assetPath,
+    required bool isVisible,
+  }) {
+    return AnimatedOpacity(
+      opacity: isVisible ? 1.0 : 0.0,
+      duration: Duration(milliseconds: _duration),
+      child: SvgPicture.asset(
+        assetPath,
+        width: 300,
+        height: 300,
+        color: color, // fill ve stroke aynı anda renklenecek
+      ),
+    );
   }
 }

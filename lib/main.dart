@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Listviews(title: 'Flutter Demo Home Page'),
+      home: SliderUI(title: 'Flutter Demo Home Page'),
     );
   }
 }

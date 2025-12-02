@@ -1,6 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_button/flutter_animated_button.dart';
 
 class Button extends StatefulWidget {
   const Button({super.key, required this.title});
@@ -275,26 +274,6 @@ class _ButtonState extends State<Button> with SingleTickerProviderStateMixin {
             children: [
               const Text("Animasyonlu buton :"),
               const SizedBox(width: 5),
-              Expanded(
-                child: AnimatedBuilder(
-                  animation: _shakeAnimation,
-                  builder: (context, child) {
-                    return Transform.translate(
-                      offset: Offset(_shakeAnimation.value, 0),
-                      child: AnimatedButton(
-                        width: double.infinity,
-                        text: "Hırsız Alarmı",
-                        backgroundColor: _isPressed
-                            ? Colors.redAccent
-                            : Colors.orange,
-                        selectedTextColor: Colors.black,
-                        transitionType: TransitionType.BOTTOM_TO_TOP,
-                        onPress: _onPress,
-                      ),
-                    );
-                  },
-                ),
-              ),
             ],
           ),
         ],
