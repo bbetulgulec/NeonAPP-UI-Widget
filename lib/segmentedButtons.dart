@@ -12,9 +12,9 @@ class _SegmentedbuttonsState extends State<Segmentedbuttons> {
   int _currentSelection = 0;
 
   List<Color> bgColor = [
-    const Color(0xFFFF00FF),
-    const Color(0xFF00FFFF),
-    const Color(0xFFCCFF00),
+    const Color.fromARGB(87, 255, 0, 255),
+    const Color.fromARGB(103, 0, 255, 255),
+    const Color.fromARGB(109, 204, 255, 0),
   ];
   double segmentedSize = 24;
 
@@ -65,35 +65,40 @@ class _SegmentedbuttonsState extends State<Segmentedbuttons> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: bgColor[_currentSelection],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.bounceInOut,
+      color: bgColor[_currentSelection],
+      child: Scaffold(
+        backgroundColor: bgColor[_currentSelection],
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
 
-        title: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              "Segmented Control",
-              style: TextStyle(
-                fontFamily: "PairPlay",
-                fontWeight: FontWeight.w800,
+          title: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                "Segmented Control",
+                style: TextStyle(
+                  fontFamily: "PairPlay",
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Align(
-          alignment: AlignmentGeometry.topCenter,
-          child: MaterialSegmentedControl(
-            children: _children,
-            selectionIndex: _currentSelection,
-            borderColor: Colors.transparent,
-            selectedColor: Colors.blueGrey,
-            unselectedColor: Colors.black,
-            onSegmentTapped: _onSegmentTapped,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(
+            alignment: AlignmentGeometry.topCenter,
+            child: MaterialSegmentedControl(
+              children: _children,
+              selectionIndex: _currentSelection,
+              borderColor: Colors.transparent,
+              selectedColor: Colors.blueGrey,
+              unselectedColor: Colors.black,
+              onSegmentTapped: _onSegmentTapped,
+            ),
           ),
         ),
       ),
