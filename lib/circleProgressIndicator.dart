@@ -26,12 +26,14 @@ class _CircleProgressStateState extends State<CircleProgressState>
     );
   }
 
-  Color progressColor() {
+   Color progressColor() {
     int percent = (startValue * 100).toInt();
-    if (percent % 10 == 0 && percent != 0) {
-      return Colors.primaries[(percent ~/ 10) % Colors.primaries.length];
-    }
-    return Colors.yellow;
+
+    int rounded = ((percent - 1) ~/ 10 + 1) * 10;
+
+    if (rounded == 0) return Colors.yellow;
+
+    return Colors.primaries[(rounded ~/ 10) % Colors.primaries.length];
   }
 
   @override
